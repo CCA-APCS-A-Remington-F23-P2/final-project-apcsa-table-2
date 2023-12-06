@@ -1,5 +1,5 @@
 //interface for randomly spawning objects (coins, platforms, etc)
 
-public interface Spawneable{
+public interface Spawnable{
 
 }
