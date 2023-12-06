@@ -1,5 +1,5 @@
 //class for generic platform
 
-public abstract class Platform{
+public class Platform implements Spawneable{
 
 }
