@@ -1,3 +1,4 @@
 public interface Collideable<T>{
-    boolean didCollide(T other);
+    boolean didCollidePlatform(T other);
+    boolean didCollideDog(T other);
 }

@@ -68,5 +68,9 @@ public class Dog implements Collideable{
         return jumpHeight;
     }
 
-
+    public boolean didCollidePlatform(Object other){
+        Platform o = (Platform)other;
+        return false;
+    }
+    
 }
