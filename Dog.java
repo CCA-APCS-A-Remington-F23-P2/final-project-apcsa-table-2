@@ -1,10 +1,21 @@
+import java.io.File;
+import java.net.URL;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Dog implements Collideable{
+
     private int xPos;
     private int yPos;
     private int width;
     private int height;
     private int speed;
     private int jumpHeight;
+    private Image image;
 
     public Dog(int x, int y, int w, int h, int spd, int jH){
         xPos = x;
@@ -74,7 +85,7 @@ public class Dog implements Collideable{
         return jumpHeight;
     }
 
-    public boolean didCollidePlatform(Object other){
+    public boolean didCollide(Object other){
         Platform o = (Platform)other;
         if(this.getX()+this.getWidth() >= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY()+this.getHeight() == o.getY()){
             return true;
