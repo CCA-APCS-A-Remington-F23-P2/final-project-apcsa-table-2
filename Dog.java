@@ -13,6 +13,12 @@ public class Dog implements Collideable{
         height = h;
         speed = spd;
         jumpHeight = jH;
+        try{
+            URL url = getClass().getResource("DogPics/GoldenRetreiver.png");
+            image = Image0.read(url);
+        }
+        catch (Exception e){
+        }
     }
 
     public void setPos(int x, int y){
@@ -70,7 +76,10 @@ public class Dog implements Collideable{
 
     public boolean didCollidePlatform(Object other){
         Platform o = (Platform)other;
+        if(this.getX()+this.getWidth() >= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY()+this.getHeight() == o.getY()){
+            return true;
+        }
         return false;
     }
-    
+
 }
