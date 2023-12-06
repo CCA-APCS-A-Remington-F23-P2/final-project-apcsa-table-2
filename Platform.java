@@ -2,7 +2,9 @@
 
 public class Platform extends Thing implements Collideable, Spawnable{
 
-    
+    public Platform(int x, int y, int w, int h){
+        super(x,y,w,h);
+    }
 
     public boolean didCollide(Object other){
         Dog o = (Dog)other;
