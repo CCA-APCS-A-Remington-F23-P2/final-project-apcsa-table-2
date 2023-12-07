@@ -49,4 +49,9 @@ public class Dog extends Thing implements Collideable{
         return false;
     }
 
+  public void draw( Graphics window )
+  {
+    window.drawImage(image,getX(),getY(),getWidth(),getHeight(),null);
+  }
+
 }

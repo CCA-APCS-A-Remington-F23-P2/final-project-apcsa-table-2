@@ -9,7 +9,7 @@ public class StarFighter extends JFrame
 
   public StarFighter()
   {
-    super("INU JAMPU");
+    super("INU JANPU");
     setSize(WIDTH,HEIGHT);
 
     GameRunner theGame = new GameRunner();
@@ -22,6 +22,6 @@ public class StarFighter extends JFrame
 
   public static void main( String args[] )
   {
-    InuJampu run = new InuJampu();
+    InuJanpu run = new InuJanpu();
   }
 }
