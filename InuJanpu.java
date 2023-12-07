@@ -2,12 +2,12 @@
 import javax.swing.JFrame;
 import java.awt.Component;
 
-public class InuJampu extends JFrame
+public class InuJanpu extends JFrame
 {
   private static final int WIDTH = 200;
   private static final int HEIGHT = 400;
 
-  public InuJampu()
+  public InuJanpu()
   {
     super("INU JANPU");
     setSize(WIDTH,HEIGHT);
