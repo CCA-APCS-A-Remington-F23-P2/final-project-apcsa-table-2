@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class Coin extends Thing implements Collideable, Spawnable{
 
   public Coin(int x, int y, int w, int h){
