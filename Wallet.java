@@ -30,7 +30,7 @@ public class Wallet{
     window.drawRect(xPos-8, yPos-16, 20, 20);
     window.fillRect(xPos-8, yPos-16, 20, 20);
     window.setColor(Color.BLACK);
-    window.drawString("Coins: " + money, xPos, yPos);
+    window.drawString(money + " Coins", xPos, yPos);
   }
   
 }
