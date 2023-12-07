@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public class Obstacle extends Thing implements Collideable, Spawnable{
 
     public Obstacle(int x, int y, int w, int h){
@@ -11,5 +13,9 @@ public class Obstacle extends Thing implements Collideable, Spawnable{
           }
         return false;
     }
+
+  public void draw(Graphics window){
+    window.fillRect(getX(),getY(),getWidth(),getHeight());
+  }
 
 }
