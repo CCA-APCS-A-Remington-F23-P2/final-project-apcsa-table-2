@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class Coin extends Thing implements Collideable, Spawnable{
 
@@ -14,6 +15,7 @@ public class Coin extends Thing implements Collideable, Spawnable{
     }
 
   public void draw(Graphics window){
+    window.setColor(Color.YELLOW);
     window.fillRect(getX(),getY(),getWidth(),getHeight());
   }
   

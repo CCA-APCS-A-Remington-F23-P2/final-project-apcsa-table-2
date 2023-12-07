@@ -14,19 +14,31 @@ import java.util.ArrayList;
 
 public class GameRunner extends Canvas implements KeyListener, Runnable
 {
+  private int screenWidth;
+  private int screenHeight;
   private Dog dog;
+  private GameObjects objects;
+  private Wallet wallet;
 
   private boolean[] keys;
   private BufferedImage back;
 
-  public GameRunner()
+  public GameRunner(int w,int h)
   {
+    screenWidth=w;
+    screenHeight=h;
+    
     setBackground(Color.black);
 
     keys = new boolean[2];
 
     //instantiate other instance variables
     dog = new Dog();
+    objects = new GameObjects();
+    objects.add(new Platform(10,10,10,100));
+    objects.add(new Coin(10,30,10,10));
+    objects.add(new Obstacle(10,50,10,30));
+    wallet= new Wallet(screenWidth-60,10);
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -54,7 +66,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     Graphics graphToBack = back.createGraphics();
   
     graphToBack.setColor(Color.CYAN);
-    graphToBack.fillRect(0,0,200,400);
+    graphToBack.fillRect(0,0,screenWidth,screenHeight);
   
     if (keys[0])
     {
@@ -67,6 +79,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       
     
     dog.draw(graphToBack);
+    objects.draw(graphToBack);
+    wallet.draw(graphToBack);
   
     twoDGraph.drawImage(back, null, 0, 0);
   }

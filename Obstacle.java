@@ -1,4 +1,5 @@
 import java.awt.Graphics;
+import java.awt.Color;
 
 public class Obstacle extends Thing implements Collideable, Spawnable{
 
@@ -15,6 +16,7 @@ public class Obstacle extends Thing implements Collideable, Spawnable{
     }
 
   public void draw(Graphics window){
+    window.setColor(Color.RED);
     window.fillRect(getX(),getY(),getWidth(),getHeight());
   }
 
