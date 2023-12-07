@@ -21,7 +21,7 @@ public class Wallet{
     money++;
   }
 
-  public void getMoney(){
+  public int getMoney(){
     return money;
   }
 

@@ -23,7 +23,7 @@ public class Dog extends Thing implements Collideable{
         jumpHeight = jH;
         try{
             URL url = getClass().getResource("DogPics/GoldenRetreiver.png");
-            image = Image0.read(url);
+            image = ImageIO.read(url);
         }
         catch (Exception e){
         }
