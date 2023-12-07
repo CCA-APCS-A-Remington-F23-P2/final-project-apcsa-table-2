@@ -1,4 +1,4 @@
-public class Thing{
+public abstract class Thing{
     private int xPos;
     private int yPos;
     private int width;
@@ -47,4 +47,6 @@ public class Thing{
     public int getHeight(){
         return height;
     }
+
+  public abstract void draw(Graphics window);
 }

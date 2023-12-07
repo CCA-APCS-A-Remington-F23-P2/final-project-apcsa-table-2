@@ -65,13 +65,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       dog.move("RIGHT");
     }
       
-    //add code to move Ship, Alien, etc.
-    dog.draw(graphToBack);
     
-      
-    //add in collision detection to see if Bullets hit the Aliens and if Bullets hit the Ship
-  
-  
+    dog.draw(graphToBack);
   
     twoDGraph.drawImage(back, null, 0, 0);
   }
