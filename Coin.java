@@ -1,10 +1,5 @@
 public class Coin extends Thing implements Collideable, Spawnable{
 
-    private int xPos;
-    private int yPos;
-    private int width;
-    private int height;
-
     public Coin(int x, int y, int w, int h){
         super(x,y,w,h);
     }

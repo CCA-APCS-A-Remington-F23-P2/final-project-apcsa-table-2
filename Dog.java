@@ -9,10 +9,6 @@ import java.util.List;
 
 public class Dog extends Thing implements Collideable{
 
-    private int xPos;
-    private int yPos;
-    private int width;
-    private int height;
     private int speed;
     private int jumpHeight;
     private Image image;
