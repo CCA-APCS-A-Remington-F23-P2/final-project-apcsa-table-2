@@ -1,7 +1,7 @@
 import java.awt.Graphics;
 import java.awt.Color;
 
-public class Coin extends Thing implements Collideable, Spawnable{
+public class Coin extends Thing implements Collideable{
 
   public Coin(int x, int y, int w, int h){
       super(x,y,w,h);

@@ -35,9 +35,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     //instantiate other instance variables
     dog = new Dog();
     objects = new GameObjects();
-    objects.add(new Platform(10,10,10,100));
-    objects.add(new Coin(10,30,10,10));
-    objects.add(new Obstacle(10,50,10,30));
+    spawnObjs();
     wallet= new Wallet(screenWidth-60,10);
 
     this.addKeyListener(this);
@@ -83,6 +81,23 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     wallet.draw(graphToBack);
   
     twoDGraph.drawImage(back, null, 0, 0);
+  }
+
+  //randomly spawns objs, platforms are weighter more than coins or obstacle
+  public void spawnObjs(){
+    for(int i=0; i<3; i++){
+      int rand = (int)(Math.random()*10);
+      if(rand<=6){
+        objects.add(new Platform(10,10,100,10));
+      }
+      else if(rand<=8){
+        objects.add(new Coin(10,30,10,10));
+      }
+      else{
+        objects.add(new Obstacle(10,50,30,10));
+      }
+    }
+  
   }
 
 
