@@ -14,7 +14,7 @@ public class Dog extends Thing implements Collideable{
     private Image image;
 
     public Dog(){
-    this(0,0,30,30,5,5);
+    this(0,300,40,40,5,5);
     }
 
     public Dog(int x, int y, int w, int h, int spd, int jH){
