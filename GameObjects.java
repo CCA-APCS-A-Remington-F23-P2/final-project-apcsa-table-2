@@ -1,3 +1,7 @@
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+
 //arraylist of all Things on the screen
 public class GameObjects
 {

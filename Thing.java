@@ -1,3 +1,5 @@
+import java.awt.Graphics;
+
 public abstract class Thing{
     private int xPos;
     private int yPos;

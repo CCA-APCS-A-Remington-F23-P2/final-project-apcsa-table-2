@@ -13,6 +13,10 @@ public class Dog extends Thing implements Collideable{
     private int jumpHeight;
     private Image image;
 
+    public Dog(){
+    this(0,0,10,10,5,5);
+    }
+
     public Dog(int x, int y, int w, int h, int spd, int jH){
         super(x,y,w,h);
         speed = spd;
@@ -52,5 +56,19 @@ public class Dog extends Thing implements Collideable{
   public void draw( Graphics window )
   {
     window.drawImage(image,getX(),getY(),getWidth(),getHeight(),null);
+  }
+
+  public void move(String direction){
+    if(direction.equals("UP"))
+      setY(getY()-speed);
+
+    else if(direction.equals("DOWN"))
+      setY(getY()+speed);
+
+    else if(direction.equals("RIGHT"))
+      setX(getX()+speed);
+
+    else if(direction.equals("LEFT"))
+      setX(getX()-speed);
   }
 }

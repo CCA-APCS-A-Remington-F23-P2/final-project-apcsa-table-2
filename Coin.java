@@ -10,4 +10,9 @@ public class Coin extends Thing implements Collideable, Spawnable{
       }
       return false;
     }
+
+  public void draw(Graphics window){
+    window.fillRect(getX(),getY(),getWidth(),getHeight());
+  }
+  
 }

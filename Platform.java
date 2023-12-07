@@ -1,4 +1,5 @@
 //class for generic platform
+import java.awt.Graphics;
 
 public class Platform extends Thing implements Collideable, Spawnable{
 
@@ -13,5 +14,9 @@ public class Platform extends Thing implements Collideable, Spawnable{
           }
         return false;
     }
+
+  public void draw(Graphics window){
+    window.fillRect(getX(),getY(),getWidth(),getHeight());
+  }
 
 }
