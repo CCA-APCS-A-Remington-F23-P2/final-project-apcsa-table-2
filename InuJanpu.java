@@ -2,12 +2,12 @@
 import javax.swing.JFrame;
 import java.awt.Component;
 
-public class StarFighter extends JFrame
+public class InuJampu extends JFrame
 {
   private static final int WIDTH = 200;
   private static final int HEIGHT = 400;
 
-  public StarFighter()
+  public InuJampu()
   {
     super("INU JANPU");
     setSize(WIDTH,HEIGHT);
