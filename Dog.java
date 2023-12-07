@@ -10,17 +10,19 @@ import java.util.List;
 public class Dog extends Thing implements Collideable{
 
     private int speed;
+  private int jumpSpeed;
     private int jumpHeight;
     private Image image;
 
     public Dog(){
-    this(0,300,40,40,2,5);
+    this(0,300,40,40,2,60,2);
     }
 
-    public Dog(int x, int y, int w, int h, int spd, int jH){
+    public Dog(int x, int y, int w, int h, int spd, int jH, int jS){
         super(x,y,w,h);
         speed = spd;
         jumpHeight = jH;
+      jumpSpeed = jS;
         try{
             URL url = getClass().getResource("DogPics/GermanShepherd.png");
             image = ImageIO.read(url);
@@ -37,6 +39,10 @@ public class Dog extends Thing implements Collideable{
         jumpHeight = j;
     }
 
+  public void setJumpSpeed(int jS){
+    jumpSpeed = jS;
+  }
+
     public int getSpeed(){
         return speed;
     }
@@ -44,6 +50,10 @@ public class Dog extends Thing implements Collideable{
     public int getJumpHeight(){
         return jumpHeight;
     }
+
+  public int getJumpSpeed(){
+    return jumpSpeed;
+  }
 
     public boolean didCollide(Object other){
         Platform o = (Platform)other;
