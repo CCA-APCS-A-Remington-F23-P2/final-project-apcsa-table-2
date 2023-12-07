@@ -8,8 +8,7 @@ public class Platform extends Thing implements Collideable{
         super(x,y,w,h);
     }
 
-    public boolean didCollide(Object other){
-        Dog o = (Dog)other;
+    public boolean didCollide(Thing o){
         if(this.getX() + this.getWidth()>= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY() + this.getHeight() >=o.getY() && this.getY()<=o.getY()+o.getHeight()){
             return true;
           }
@@ -21,4 +20,7 @@ public class Platform extends Thing implements Collideable{
     window.fillRect(getX(),getY(),getWidth(),getHeight());
   }
 
+  public String toString(){
+    return "platform";
+  }
 }

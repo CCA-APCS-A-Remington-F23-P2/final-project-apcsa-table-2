@@ -51,4 +51,8 @@ public abstract class Thing{
     }
 
   public abstract void draw(Graphics window);
+
+  public abstract boolean didCollide(Thing o);
+
+  public abstract String toString();
 }

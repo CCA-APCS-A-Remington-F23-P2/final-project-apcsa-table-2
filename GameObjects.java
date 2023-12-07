@@ -24,5 +24,13 @@ public class GameObjects
   public List<Thing> getList(){
     return objects;
   }
+
+  public boolean didCollide(Thing o, String objType){
+    for(Thing obj : objects){
+      if(obj.didCollide(o) && obj.toString().equals(objType))
+        return true;
+    }
+    return false;
+  }
   
 }

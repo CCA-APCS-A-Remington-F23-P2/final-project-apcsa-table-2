@@ -16,6 +16,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
 {
   private int screenWidth;
   private int screenHeight;
+  private boolean isJumping;
+  private int initialJumpPos;
+  
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
@@ -27,6 +30,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   {
     screenWidth=w;
     screenHeight=h;
+    isJumping=false;
     
     setBackground(Color.black);
 
@@ -37,6 +41,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     objects = new GameObjects();
     spawnObjs();
     wallet= new Wallet(screenWidth-60,10);
+    //test platform
+    objects.add(new Platform(0,400,300,10));
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -66,15 +72,31 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     graphToBack.setColor(Color.CYAN);
     graphToBack.fillRect(0,0,screenWidth,screenHeight);
   
-    if (keys[0])
+    if (keys[0] && dog.getX()>0)
     {
       dog.move("LEFT");
     }
-    if (keys[1])
+    if (keys[1] && dog.getX()+dog.getWidth()+10<screenWidth)
     {
       dog.move("RIGHT");
     }
-      
+    
+    //make dog constantly falling if it is not on a platform
+    if(!objects.didCollide(dog, "platform"))
+      dog.move("DOWN");
+
+    //make the dog jump if it is touching a platform
+    if(objects.didCollide(dog, "platform"))
+    {
+      isJumping=true;
+      initialJumpPos=dog.getY();
+    }
+    if(initialJumpPos-dog.getY() >= dog.getJumpHeight()){
+      isJumping=false;
+    }
+    if(isJumping){
+      dog.move("UP");
+    }
     
     dog.draw(graphToBack);
     objects.draw(graphToBack);
@@ -83,7 +105,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     twoDGraph.drawImage(back, null, 0, 0);
   }
 
-  //randomly spawns objs, platforms are weighter more than coins or obstacle
+  //randomly spawns objs, platforms are weighted more than coins or obstacle
   public void spawnObjs(){
     for(int i=0; i<3; i++){
       int rand = (int)(Math.random()*10);
@@ -111,6 +133,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     {
       keys[1] = true;
     }
+    if (e.getKeyCode() == KeyEvent.VK_LEFT)
+    {
+      keys[0] = true;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT)
+    {
+      keys[1] = true;
+    }
     repaint();
   }
 
@@ -121,6 +151,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       keys[0] = false;
     }
     if (e.getKeyCode() == KeyEvent.VK_D)
+    {
+      keys[1] = false;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_LEFT)
+    {
+      keys[0] = false;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT)
     {
       keys[1] = false;
     }
