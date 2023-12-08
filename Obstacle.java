@@ -4,7 +4,7 @@ import java.awt.Color;
 public class Obstacle extends Thing implements Collideable{
 
     public Obstacle(int x, int y, int w, int h){
-        super(x,y,w,h);
+        super(x,y,w,h,1);
     }
 
     public boolean didCollide(Thing o){

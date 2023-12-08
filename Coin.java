@@ -4,7 +4,7 @@ import java.awt.Color;
 public class Coin extends Thing implements Collideable{
 
   public Coin(int x, int y, int w, int h){
-      super(x,y,w,h);
+      super(x,y,w,h,1);
   }
   public boolean didCollide(Thing o){
     if(this.getX() + this.getWidth()>= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY() + this.getHeight() >=o.getY() && this.getY()<=o.getY()+o.getHeight()){
