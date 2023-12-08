@@ -40,10 +40,12 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     //instantiate other instance variables
     dog = new Dog();
     objects = new GameObjects();
-    spawnObjs();
     wallet= new Wallet(screenWidth-60,10);
-    //test platform
-    objects.add(new Platform(0,400,300,10));
+
+    //spawn level
+    for(int i=screenHeight-50; i>0; i-=50){
+      spawnObjs(i);
+    }
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -83,8 +85,18 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     }
     
     //make dog constantly falling if it is not on a platform
-    if(!objects.didCollide(dog, "platform"))
+    if(!objects.didCollide(dog, "platform")){
       dog.move("DOWN");
+
+      }
+
+      if(objects.didCollide(dog, "coin")){
+        wallet.moneyCollect();
+      }
+
+      if(objects.didCollide(dog, "obstacle")){
+        System.out.println("YOU DIED");
+      }
 
     //make the dog jump if it is touching a platform
     if(objects.didCollide(dog, "platform") && !isJumping)
@@ -119,19 +131,21 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     twoDGraph.drawImage(back, null, 0, 0);
   }
 
-  //randomly spawns objs, platforms are weighted more than coins or obstacle
-  public void spawnObjs(){
-    for(int i=0; i<3; i++){
+  //randomly spawns objs
+  public void spawnObjs(int yPos){
       int rand = (int)(Math.random()*10);
-      if(rand<=6){
-        objects.add(new Platform(10,10,100,10));
+    int randX = (int)((Math.random()*5)+1)*50;
+    
+      //spawn platforms at a random xPos
+      objects.add(new Platform(randX,yPos,50,10));
+      
+      //small chance of having either a coin or obstacle spawn in between platforms
+    randX = (int)((Math.random()*11)+1)*25;
+      if(rand<=2){
+        objects.add(new Coin(randX,yPos+10,10,10));
       }
-      else if(rand<=8){
-        objects.add(new Coin(10,30,10,10));
-      }
-      else{
-        objects.add(new Obstacle(10,50,30,10));
-      }
+      else if(rand<=3){
+        objects.add(new Obstacle(randX,yPos+25,25,10));
     }
   
   }
