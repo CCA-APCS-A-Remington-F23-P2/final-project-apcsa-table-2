@@ -18,6 +18,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   private int screenHeight;
   private boolean isJumping;
   private int initialJumpPos;
+  private boolean rising;
   
   private Dog dog;
   private GameObjects objects;
@@ -96,6 +97,19 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     }
     if(isJumping){
       dog.move("UP");
+    }
+
+    if(dog.getY()>500){
+      rising = true;
+    }
+    if(dog.getY()<350){
+      rising = false;
+    }
+    if(rising){
+      for(int i=0; i<objects.getList().size(); i++){
+        objects[i].move("DOWN");
+      }
+      dog.move("DOWN");
     }
     
     dog.draw(graphToBack);
