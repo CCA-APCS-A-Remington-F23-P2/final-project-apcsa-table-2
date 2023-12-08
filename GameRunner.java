@@ -86,7 +86,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       dog.move("DOWN");
 
     //make the dog jump if it is touching a platform
-    if(objects.didCollide(dog, "platform"))
+    if(objects.didCollide(dog, "platform") && !isJumping)
     {
       isJumping=true;
       initialJumpPos=dog.getY();

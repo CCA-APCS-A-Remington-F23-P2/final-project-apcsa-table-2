@@ -9,7 +9,7 @@ public class Platform extends Thing implements Collideable{
     }
 
     public boolean didCollide(Thing o){
-        if(this.getX() + this.getWidth()>= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY() + this.getHeight() >=o.getY() && this.getY()<=o.getY()+o.getHeight()){
+        if(this.getX() + this.getWidth()>= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY() == o.getY()+o.getHeight()){
             return true;
           }
         return false;
