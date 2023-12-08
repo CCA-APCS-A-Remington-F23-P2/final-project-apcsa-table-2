@@ -5,7 +5,16 @@ public abstract class Thing{
     private int yPos;
     private int width;
     private int height;
+    private int speed;
 
+    public Thing(int x, int y, int w, int h, int s){
+        xPos = x;
+        yPos = y;
+        width = w;
+        height = h;
+        speed = s;
+    }
+  
     public Thing(int x, int y, int w, int h){
         xPos = x;
         yPos = y;
@@ -34,6 +43,10 @@ public abstract class Thing{
         height = h;
     }
 
+    public void setSpeed(int s){
+      speed = s;
+    }
+
     public int getX(){
         return xPos;
     }
@@ -49,6 +62,12 @@ public abstract class Thing{
     public int getHeight(){
         return height;
     }
+
+    public int getSpeed(){
+      return speed;
+    }
+
+  public abstract void move(String direction);
 
   public abstract void draw(Graphics window);
 
