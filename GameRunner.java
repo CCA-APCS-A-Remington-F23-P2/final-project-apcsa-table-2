@@ -107,7 +107,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     }
     if(rising){
       for(int i=0; i<objects.getList().size(); i++){
-        objects[i].move("DOWN");
+        objects.getList()[i].move("DOWN");
       }
       dog.move("DOWN");
     }
