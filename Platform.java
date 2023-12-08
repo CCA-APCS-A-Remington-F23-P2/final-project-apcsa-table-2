@@ -23,4 +23,18 @@ public class Platform extends Thing implements Collideable{
   public String toString(){
     return "platform";
   }
+
+  public void move(String direction){
+    if(direction.equals("UP"))
+      setY(getY()-getSpeed());
+
+    else if(direction.equals("DOWN"))
+      setY(getY()+getSpeed());
+
+    else if(direction.equals("RIGHT"))
+      setX(getX()+getSpeed());
+
+    else if(direction.equals("LEFT"))
+      setX(getX()-getSpeed());
+  }
 }

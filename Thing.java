@@ -67,6 +67,8 @@ public abstract class Thing{
       return speed;
     }
 
+    
+
   public abstract void move(String direction);
 
   public abstract void draw(Graphics window);
