@@ -26,9 +26,13 @@ public class GameObjects
   }
 
   public boolean didCollide(Thing o, String objType){
-    for(Thing obj : objects){
-      if(obj.didCollide(o) && obj.toString().equals(objType))
+    for(int i=0; i<objects.size(); i++){
+      if(objects.get(i).didCollide(o) && objects.get(i).toString().equals(objType)){
+        if(objType.equals("coin"))
+          objects.remove(i);
+          
         return true;
+      }
     }
     return false;
   }
