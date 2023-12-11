@@ -36,5 +36,17 @@ public class GameObjects
     }
     return false;
   }
+
+  public void move(String direction){
+    for(Thing obj : objects){
+      obj.move(direction);
+    }
+  }
+
+  public void shiftDown(int amount){
+    for(Thing obj : objects){
+      obj.setY(obj.getY()+amount);
+    }
+  }
   
 }

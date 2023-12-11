@@ -20,6 +20,10 @@ public class Dog extends Thing implements Collideable{
     this(0,300,40,40,2,100,2,1);
     }
 
+    public Dog(int x, int y){
+      this(x,y,40,40,2,100,2,1);
+    }
+
     public Dog(int x, int y, int w, int h, int spd, int jH, int jS, int fS){
         super(x,y,w,h);
         speed = spd;

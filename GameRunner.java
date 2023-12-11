@@ -18,7 +18,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   private int screenHeight;
   private boolean isJumping;
   private int initialJumpPos;
-  private boolean rising;
+  private boolean gameOver;
   
   private Dog dog;
   private GameObjects objects;
@@ -38,7 +38,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     keys = new boolean[2];
 
     //instantiate other instance variables
-    dog = new Dog();
+    dog = new Dog(screenWidth/2,screenHeight/2);
     objects = new GameObjects();
     wallet= new Wallet(screenWidth-60,10);
 
@@ -75,17 +75,17 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     graphToBack.setColor(Color.CYAN);
     graphToBack.fillRect(0,0,screenWidth,screenHeight);
   
-    if (keys[0] && dog.getX()>0)
+    if (keys[0] && dog.getX()>0 && !gameOver)
     {
       dog.move("LEFT");
     }
-    if (keys[1] && dog.getX()+dog.getWidth()+10<screenWidth)
+    if (keys[1] && dog.getX()+dog.getWidth()+10<screenWidth && !gameOver)
     {
       dog.move("RIGHT");
     }
     
     //make dog constantly falling if it is not on a platform
-    if(!isJumping){
+    if(!isJumping && !gameOver){
       dog.move("DOWN");
     }
 
@@ -93,12 +93,18 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
         wallet.moneyCollect();
       }
 
-      if(objects.didCollide(dog, "obstacle")){
-        System.out.println("YOU DIED");
+    //game over - this will be replaced by the menu once that is implemented
+      if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
+        graphToBack.setColor(Color.BLACK);
+        graphToBack.fillRect(0,0,screenWidth,screenHeight);
+        graphToBack.setColor(Color.RED);
+        graphToBack.drawString("GAME OVER",screenWidth/2,screenHeight/2);
+        graphToBack.drawString("press SPACE to restart",screenWidth/2,screenHeight/2+20);
+        gameOver=true;
       }
 
     //make the dog jump if it is touching a platform
-    if(objects.didCollide(dog, "platform") && !isJumping)
+    if(objects.didCollide(dog, "platform") && !isJumping && !gameOver)
     {
       isJumping=true;
       initialJumpPos=dog.getY();
@@ -110,22 +116,20 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       dog.move("UP");
     }
 
-    if(dog.getY()>500){
-      rising = true;
-    }
-    if(dog.getY()<350){
-      rising = false;
-    }
-    if(rising){
-      for(int i=0; i<objects.getList().size(); i++){
-        objects.getList().get(i).move("DOWN");
-      }
-      dog.move("DOWN");
+    if(dog.getY()<screenHeight-300){
+      objects.shiftDown(50);
+      dog.setY(dog.getY()+50);
+      initialJumpPos+=50;
+      spawnObjs(50);
     }
     
-    dog.draw(graphToBack);
-    objects.draw(graphToBack);
-    wallet.draw(graphToBack);
+
+
+    if(!gameOver){
+      dog.draw(graphToBack);
+      objects.draw(graphToBack);
+      wallet.draw(graphToBack);
+    }
   
     twoDGraph.drawImage(back, null, 0, 0);
   }
@@ -144,9 +148,25 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
         objects.add(new Coin(randX,yPos+10,10,10));
       }
       else if(rand<=3){
-        objects.add(new Obstacle(randX,yPos+25,25,10));
+        if(randX>=150)
+          objects.add(new Obstacle(randX,yPos+25,10,10));
     }
   
+  }
+
+  public void restart(){
+    gameOver=false;
+    setBackground(Color.black);
+
+    //instantiate other instance variables
+    dog = new Dog(screenWidth/2,screenHeight/2);
+    objects = new GameObjects();
+    wallet= new Wallet(screenWidth-60,10);
+
+    //spawn level
+    for(int i=screenHeight-50; i>0; i-=50){
+      spawnObjs(i);
+    }
   }
 
 
@@ -195,6 +215,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   public void keyTyped(KeyEvent e)
   {
     //no code needed here
+    if(e.getKeyChar()==' ' && gameOver){
+      restart();
+    }
+    
   }
 
   public void run()
