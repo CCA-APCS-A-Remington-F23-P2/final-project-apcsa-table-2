@@ -85,10 +85,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     }
     
     //make dog constantly falling if it is not on a platform
-    if(!objects.didCollide(dog, "platform")){
-      dog.move("DOWN");
+    // if(!objects.didCollide(dog, "platform")){
+    //   dog.move("DOWN");
 
-      }
+    //   }
+
+    if(!isJumping){
+      dog.move("DOWN");
+    }
 
       if(objects.didCollide(dog, "coin")){
         wallet.moneyCollect();
