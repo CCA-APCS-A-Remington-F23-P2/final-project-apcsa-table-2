@@ -16,8 +16,12 @@ public class Platform extends Thing implements Collideable{
     }
 
   public void draw(Graphics window){
-    window.setColor(Color.BLACK);
+    window.setColor(Color.WHITE);
     window.fillRect(getX(),getY(),getWidth(),getHeight());
+    window.fillOval(getX()-5, getY()-5, 11, 11);
+    window.fillOval(getX()-5, getY()+4, 11, 11);
+    window.fillOval(getX()+getWidth()-5, getY()-5, 11, 11);
+    window.fillOval(getX()+getWidth()-5, getY()+4, 11, 11);
   }
 
   public String toString(){
