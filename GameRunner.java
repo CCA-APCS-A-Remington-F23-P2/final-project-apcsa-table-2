@@ -18,7 +18,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   private int screenHeight;
   private boolean isJumping;
   private int initialJumpPos;
-  private boolean gameOver;
+  private boolean gameRunning;
+  private boolean inventoryOpen;
   
   private Dog dog;
   private GameObjects objects;
@@ -29,23 +30,15 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
 
   public GameRunner(int w,int h)
   {
+    //only sets vars needed for menu, rest of vars for game are set when space is pressed in the menu
     screenWidth=w;
     screenHeight=h;
-    isJumping=false;
+    gameRunning=false;
+    inventoryOpen=false;
     
     setBackground(Color.black);
 
     keys = new boolean[2];
-
-    //instantiate other instance variables
-    dog = new Dog(screenWidth/2,screenHeight/2);
-    objects = new GameObjects();
-    wallet= new Wallet(screenWidth-60,10);
-
-    //spawn level
-    for(int i=screenHeight-50; i>0; i-=50){
-      spawnObjs(i);
-    }
 
     this.addKeyListener(this);
     new Thread(this).start();
@@ -57,35 +50,56 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   {
     paint(window);
   }
-
-  public void paint( Graphics window )
-  {
-    //set up the double buffering to make the game animation nice and smooth
-    Graphics2D twoDGraph = (Graphics2D)window;
   
-    //take a snap shop of the current screen and same it as an image
-    //that is the exact same width and height as the current screen
+  public void paint(Graphics window)
+  {
+    Graphics2D twoDGraph = (Graphics2D)window;
     if (back==null)
       back = (BufferedImage)(createImage(getWidth(),getHeight()));
-  
-    //create a graphics reference to the back ground image
-    //we will draw all changes on the background image
     Graphics graphToBack = back.createGraphics();
-  
+
+    //if start has been pressed, run game
+    if(gameRunning){
+      game(graphToBack);
+    }
+    //if inventory has been opened, display inventory menu
+    else if(inventoryOpen){
+      graphToBack.setColor(Color.WHITE);
+      graphToBack.fillRect(0,0,screenWidth,screenHeight);
+      graphToBack.setColor(Color.BLACK);
+      graphToBack.drawString("Inventory is WIP",0,30);
+      graphToBack.drawString("Press Space to Play",0,60);
+      graphToBack.drawString("Press M for Main Menu",0,90);
+    }
+    //if it has not, display the main menu
+    else{
+      graphToBack.setColor(Color.WHITE);
+      graphToBack.fillRect(0,0,screenWidth,screenHeight);
+      graphToBack.setColor(Color.BLACK);
+      graphToBack.drawString("Welcome to Inu Janpu",0,30);
+      graphToBack.drawString("Press Space to Play",0,60);
+      graphToBack.drawString("Press M for Inventory",0,90);
+    }
+    
+    twoDGraph.drawImage(back, null, 0, 0);
+  }
+
+  public void game( Graphics graphToBack )
+  {
     graphToBack.setColor(Color.CYAN);
     graphToBack.fillRect(0,0,screenWidth,screenHeight);
   
-    if (keys[0] && dog.getX()>0 && !gameOver)
+    if (keys[0] && dog.getX()>0)
     {
       dog.move("LEFT");
     }
-    if (keys[1] && dog.getX()+dog.getWidth()+10<screenWidth && !gameOver)
+    if (keys[1] && dog.getX()+dog.getWidth()+10<screenWidth)
     {
       dog.move("RIGHT");
     }
     
     //make dog constantly falling if it is not on a platform
-    if(!isJumping && !gameOver){
+    if(!isJumping){
       dog.move("DOWN");
     }
 
@@ -93,18 +107,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
         wallet.moneyCollect();
       }
 
-    //game over - this will be replaced by the menu once that is implemented
+    //game over
       if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
-        graphToBack.setColor(Color.BLACK);
-        graphToBack.fillRect(0,0,screenWidth,screenHeight);
-        graphToBack.setColor(Color.RED);
-        graphToBack.drawString("GAME OVER",screenWidth/2,screenHeight/2);
-        graphToBack.drawString("press SPACE to restart",screenWidth/2,screenHeight/2+20);
-        gameOver=true;
+        gameRunning=false;
       }
 
-    //make the dog jump if it is touching a platform
-    if(objects.didCollide(dog, "platform") && !isJumping && !gameOver)
+    //make the dog jump if it is touching a platform and not currently jumping
+    if(objects.didCollide(dog, "platform") && !isJumping)
     {
       isJumping=true;
       initialJumpPos=dog.getY();
@@ -116,22 +125,18 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       dog.move("UP");
     }
 
-    if(dog.getY()<screenHeight-300){
+    //keeps dog in the bottom 1/3 of the screen and spawns level as it moves up
+    if(dog.getY()<screenHeight-250){
       objects.shiftDown(50);
       dog.setY(dog.getY()+50);
       initialJumpPos+=50;
       spawnObjs(50);
     }
     
-
-
-    if(!gameOver){
       dog.draw(graphToBack);
       objects.draw(graphToBack);
       wallet.draw(graphToBack);
-    }
-  
-    twoDGraph.drawImage(back, null, 0, 0);
+      objs.cleanUp(screenHeight);
   }
 
   //randomly spawns objs
@@ -153,22 +158,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     }
   
   }
-
-  public void restart(){
-    gameOver=false;
-    setBackground(Color.black);
-
-    //instantiate other instance variables
-    dog = new Dog(screenWidth/2,screenHeight/2);
-    objects = new GameObjects();
-    wallet= new Wallet(screenWidth-60,10);
-
-    //spawn level
-    for(int i=screenHeight-50; i>0; i-=50){
-      spawnObjs(i);
-    }
-  }
-
 
   public void keyPressed(KeyEvent e)
   {
@@ -214,11 +203,24 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
 
   public void keyTyped(KeyEvent e)
   {
-    //no code needed here
-    if(e.getKeyChar()==' ' && gameOver){
-      restart();
+    // if space is pressed in menu, make new game
+    if(e.getKeyChar()==' ' && !gameRunning){
+      gameRunning=true;
+
+      isJumping=false;
+      dog = new Dog(screenWidth/2,screenHeight/2);
+      objects = new GameObjects();
+      wallet= new Wallet(screenWidth-60,10);
+      
+      for(int i=screenHeight-50; i>0; i-=50){
+        spawnObjs(i);
+      }
     }
-    
+
+    //toggles between inventory and MM
+    if(e.getKeyChar()=='m' && !gameRunning){
+      inventoryOpen=!inventoryOpen;
+    }
   }
 
   public void run()

@@ -48,5 +48,12 @@ public class GameObjects
       obj.setY(obj.getY()+amount);
     }
   }
+
+  public void cleanUp(int screenHeight){
+    for(int i=0; i<objects.length; i++){
+      if(objects[i].getY()>screenHeight)
+        objects.remove(i);
+    }
+  }
   
 }
