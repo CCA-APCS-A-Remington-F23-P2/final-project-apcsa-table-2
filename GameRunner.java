@@ -136,7 +136,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       dog.draw(graphToBack);
       objects.draw(graphToBack);
       wallet.draw(graphToBack);
-      objs.cleanUp(screenHeight);
+      objects.cleanUp(screenHeight);
   }
 
   //randomly spawns objs
