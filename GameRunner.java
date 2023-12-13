@@ -229,21 +229,17 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       inventoryOpen=false;
 
       isJumping=false;
-<<<<<<< HEAD
       objects = new GameObjects();
       wallet= new Wallet(screenWidth-60,10);
       dog = new Dog(screenWidth/2,screenHeight/2);
       objects.add(new Platform(screenWidth/3+25,dog.getY()+100,50,10));
 
-      for(int i=screenHeight; i>-50; i-=50){
-=======
       dog = new Dog(screenWidth/2,screenHeight-100);
       objects = new GameObjects();
       wallet= new Wallet(screenWidth-60,10);
 
       objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
       for(int i=screenHeight-100; i>0; i-=50){
->>>>>>> 75d12b62e21d5c349ca41064ea1de149ac45de63
         spawnObjs(i);
       }
     }
