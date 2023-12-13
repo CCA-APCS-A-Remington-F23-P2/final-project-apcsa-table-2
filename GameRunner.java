@@ -150,7 +150,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       //small chance of having either a coin or obstacle spawn in between platforms
     randX = (int)((Math.random()*11)+1)*25;
       if(rand<=2){
-        objects.add(new Coin(randX,yPos+10,10,10));
+        objects.add(new Coin(randX,yPos+10,15,15));
       }
       else if(rand<=3){
         if(randX>=150)
