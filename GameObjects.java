@@ -51,9 +51,18 @@ public class GameObjects
 
   public void cleanUp(int screenHeight){
     for(int i=0; i<objects.size(); i++){
-      if(objects.get(i).getY()>screenHeight)
+      if(objects.get(i).getY()>=screenHeight-30)
         objects.remove(i);
     }
+  }
+
+  //for bugtesting
+  public String toString(){
+    String output="";
+    for(Object o : objects){
+      output+=o.toString()+" ";
+    }
+    return output;
   }
   
 }

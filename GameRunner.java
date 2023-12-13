@@ -7,12 +7,14 @@ import java.awt.Canvas;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-public class GameRunner extends Canvas implements KeyListener, Runnable
+public class GameRunner extends Canvas implements KeyListener, Runnable, MouseListener
 {
   private int screenWidth;
   private int screenHeight;
@@ -20,6 +22,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
   private int initialJumpPos;
   private boolean gameRunning;
   private boolean inventoryOpen;
+  private int screenShiftCount;
   
   private Dog dog;
   private GameObjects objects;
@@ -35,12 +38,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
     screenHeight=h;
     gameRunning=false;
     inventoryOpen=false;
+    dog = new Dog();
     
     setBackground(Color.black);
 
     keys = new boolean[2];
 
     this.addKeyListener(this);
+    this.addMouseListener(this);
     new Thread(this).start();
 
     setVisible(true);
@@ -67,18 +72,25 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       graphToBack.setColor(Color.WHITE);
       graphToBack.fillRect(0,0,screenWidth,screenHeight);
       graphToBack.setColor(Color.BLACK);
-      graphToBack.drawString("Inventory is WIP",0,30);
-      graphToBack.drawString("Press Space to Play",0,60);
-      graphToBack.drawString("Press M for Main Menu",0,90);
+      graphToBack.drawString("Welcome to the Inventory",screenWidth/4,20);
+      graphToBack.fillRect(100,screenHeight-270,100,40);
+      graphToBack.fillRect(100,screenHeight-200,100,40);
+      graphToBack.setColor(Color.WHITE);
+      graphToBack.drawString("START",130,screenHeight-245);
+      graphToBack.drawString("MENU",130,screenHeight-175);
     }
     //if it has not, display the main menu
     else{
       graphToBack.setColor(Color.WHITE);
       graphToBack.fillRect(0,0,screenWidth,screenHeight);
       graphToBack.setColor(Color.BLACK);
-      graphToBack.drawString("Welcome to Inu Janpu",0,30);
-      graphToBack.drawString("Press Space to Play",0,60);
-      graphToBack.drawString("Press M for Inventory",0,90);
+      graphToBack.drawString("Welcome to Inu Janpu",screenWidth/4,20);
+      graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
+      graphToBack.fillRect(100,screenHeight-270,100,40);
+      graphToBack.fillRect(100,screenHeight-200,100,40);
+      graphToBack.setColor(Color.WHITE);
+      graphToBack.drawString("START",130,screenHeight-245);
+      graphToBack.drawString("INVENTORY",120,screenHeight-175);
     }
     
     twoDGraph.drawImage(back, null, 0, 0);
@@ -127,10 +139,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
 
     //keeps dog in the bottom 1/3 of the screen and spawns level as it moves up
     if(dog.getY()<screenHeight-250){
-      objects.shiftDown(50);
-      dog.setY(dog.getY()+50);
-      initialJumpPos+=50;
-      spawnObjs(50);
+      objects.shiftDown(5);
+      dog.setY(dog.getY()+5);
+      initialJumpPos+=5;
+      screenShiftCount++;
+      if(screenShiftCount==10){
+        spawnObjs(0);
+        screenShiftCount=0;
+      }
     }
     
       dog.draw(graphToBack);
@@ -152,10 +168,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       if(rand<=2){
         objects.add(new Coin(randX,yPos+10,10,10));
       }
-      else if(rand<=3){
-        if(randX>=150)
-          objects.add(new Obstacle(randX,yPos+25,10,10));
-    }
+    //obstacles need to be reworked
+    //   else if(rand<=3){
+    //     if(randX>=150)
+    //       objects.add(new Obstacle(randX,yPos+25,10,10));
+    // }
   
   }
 
@@ -203,25 +220,36 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
 
   public void keyTyped(KeyEvent e)
   {
-    // if space is pressed in menu, make new game
-    if(e.getKeyChar()==' ' && !gameRunning){
+  }
+
+  public void mouseClicked(MouseEvent e){
+    //restart game if START is pressed
+    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning){
       gameRunning=true;
+      inventoryOpen=false;
 
       isJumping=false;
-      dog = new Dog(screenWidth/2,screenHeight/2);
       objects = new GameObjects();
       wallet= new Wallet(screenWidth-60,10);
-      
-      for(int i=screenHeight-50; i>0; i-=50){
+      dog = new Dog(screenWidth/2,screenHeight/2);
+      objects.add(new Platform(screenWidth/3+25,dog.getY()+100,50,10));
+
+      for(int i=screenHeight; i>-50; i-=50){
         spawnObjs(i);
       }
     }
-
-    //toggles between inventory and MM
-    if(e.getKeyChar()=='m' && !gameRunning){
+    
+    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning){
       inventoryOpen=!inventoryOpen;
     }
+      
   }
+  public void mouseExited(MouseEvent e){}
+  public void mouseEntered(MouseEvent e){}
+  public void mouseReleased(MouseEvent e){}
+  public void mousePressed(MouseEvent e){}
+  public void mouseDragged(MouseEvent e){}
+  public void mouseMoved(MouseEvent e){}
 
   public void run()
   {
