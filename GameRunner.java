@@ -13,6 +13,10 @@ import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.io.File;
+//import java.io.IOException;
 
 public class GameRunner extends Canvas implements KeyListener, Runnable, MouseListener
 {
@@ -27,6 +31,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
+  private File file;
 
   private boolean[] keys;
   private BufferedImage back;
@@ -39,6 +44,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     gameRunning=false;
     inventoryOpen=false;
     dog = new Dog();
+    
+    file = new File("gameData.txt");
+    wallet= new Wallet(screenWidth-60,10, file);
     
     setBackground(Color.black);
 
@@ -116,12 +124,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
 
       if(objects.didCollide(dog, "coin")){
-        wallet.moneyCollect();
+        wallet.collectCoins(1);
       }
 
     //game over
       if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
         gameRunning=false;
+        wallet.addCoins();
       }
 
     //make the dog jump if it is touching a platform and not currently jumping
@@ -233,13 +242,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
       isJumping=false;
       objects = new GameObjects();
-      wallet= new Wallet(screenWidth-60,10);
-      dog = new Dog(screenWidth/2,screenHeight/2);
       objects.add(new Platform(screenWidth/3+25,dog.getY()+100,50,10));
 
       dog = new Dog(screenWidth/2,screenHeight-100);
       objects = new GameObjects();
-      wallet= new Wallet(screenWidth-60,10);
 
       objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
       for(int i=screenHeight; i>-50; i-=50){

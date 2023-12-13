@@ -1,15 +1,37 @@
 import java.awt.Graphics;
 import java.awt.Color;
+import java.io.File;
+import java.io.Writer;
+import java.io.FileWriter;
+import java.util.Scanner;
 
 public class Wallet{
   private int money;
   private int xPos;
   private int yPos;
+  private int coins;
+  Writer writer;
+  Scanner scanner;
+  File file;
 
-  public Wallet(int x, int y){
+  //coins is coins collected in current game, money is total coins (persistent)
+  public Wallet(int x, int y, File f){
+    try{
+      file = f;
+      writer = new FileWriter(file);
+      scanner= new Scanner(file);
+    }
+    catch(Exception e){System.out.println("error");}
+    
     xPos = x;
     yPos = y;
-    money = 0;
+    
+    try{
+    money = scanner.nextInt();
+    }
+    catch(Exception e){}
+    
+    coins=0;
   }
 
   public void setPos(int x, int y){
@@ -17,12 +39,25 @@ public class Wallet{
     yPos = y;
   }
 
-  public void moneyCollect(){
-    money++;
+  public void addCoins(){
+    money+=coins;
+    try{
+      file.delete();
+      file = new File("gameData.txt");
+      writer = new FileWriter(file);
+      writer.write(money+"");
+      writer.flush();
+    }
+    catch(Exception e){}
+    coins=0;
   }
 
   public int getMoney(){
     return money;
+  }
+
+  public void collectCoins(int c){
+    coins+=c;
   }
 
   public void draw(Graphics window){
@@ -30,7 +65,7 @@ public class Wallet{
     window.drawRect(xPos-8, yPos-16, 20, 20);
     window.fillRect(xPos-8, yPos-16, 20, 20);
     window.setColor(Color.BLACK);
-    window.drawString(money + " Coins", xPos, yPos);
+    window.drawString(coins + " Coins", xPos, yPos);
   }
   
 }
