@@ -1,5 +1,9 @@
 //this is where the game will be ran from - most of the Graphics stuff will be here
 //using StarFighter Graphics
+import java.io.File;
+import java.net.URL;
+import java.awt.Image;
+import javax.imageio.ImageIO;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -23,6 +27,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean gameRunning;
   private boolean inventoryOpen;
   private int screenShiftCount;
+
+  private int[] nextX = {210, 230, 210};
+  private int[] nextY = {130, 145, 160};
+  private int[] prevX = {90, 70, 90};
+  private int[] prevY = {130, 145, 160};
   
   private Dog dog;
   private GameObjects objects;
@@ -88,6 +97,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
       graphToBack.fillRect(100,screenHeight-270,100,40);
       graphToBack.fillRect(100,screenHeight-200,100,40);
+      graphToBack.fillPolygon(nextX, nextY, 3);
+      graphToBack.fillPolygon(prevX, prevY, 3);
       graphToBack.setColor(Color.WHITE);
       graphToBack.drawString("START",130,screenHeight-245);
       graphToBack.drawString("INVENTORY",120,screenHeight-175);
@@ -245,6 +256,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       for(int i=screenHeight; i>-50; i-=50){
         spawnObjs(i);
       }
+    }
+
+    if(e.getX() >= 210 && e.getX() <= 230 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
+      //next dog
+    }
+
+    if(e.getX() >= 70 && e.getX() <= 90 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
+      //prev dog
     }
     
     if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning){
