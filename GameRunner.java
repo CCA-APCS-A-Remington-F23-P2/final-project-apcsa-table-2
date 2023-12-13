@@ -166,7 +166,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       //small chance of having either a coin or obstacle spawn in between platforms
     randX = (int)((Math.random()*11)+1)*25;
       if(rand<=2){
-        objects.add(new Coin(randX,yPos+10,10,10));
+        objects.add(new Coin(randX,yPos+10,15,15));
       }
     //obstacles need to be reworked
     //   else if(rand<=3){
@@ -229,12 +229,21 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       inventoryOpen=false;
 
       isJumping=false;
+<<<<<<< HEAD
       objects = new GameObjects();
       wallet= new Wallet(screenWidth-60,10);
       dog = new Dog(screenWidth/2,screenHeight/2);
       objects.add(new Platform(screenWidth/3+25,dog.getY()+100,50,10));
 
       for(int i=screenHeight; i>-50; i-=50){
+=======
+      dog = new Dog(screenWidth/2,screenHeight-100);
+      objects = new GameObjects();
+      wallet= new Wallet(screenWidth-60,10);
+
+      objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
+      for(int i=screenHeight-100; i>0; i-=50){
+>>>>>>> 75d12b62e21d5c349ca41064ea1de149ac45de63
         spawnObjs(i);
       }
     }
