@@ -14,15 +14,15 @@ public class Dog extends Thing implements Collideable{
   private int jumpHeight;
   private int fallSpeed;
   
-    private Image image;
+  private Image image;
 
-    public Dog(){
-    this(0,300,40,40,2,100,2,1);
-    }
+  public Dog(){
+  this(0,300,40,40,2,100,2,1);
+  }
 
-    public Dog(int x, int y){
-      this(x,y,40,40,2,100,2,1);
-    }
+  public Dog(int x, int y){
+    this(x,y,40,40,2,100,2,1);
+  }
 
     public Dog(int x, int y, int w, int h, int spd, int jH, int jS, int fS){
         super(x,y,w,h);
@@ -38,10 +38,6 @@ public class Dog extends Thing implements Collideable{
         }
     }
 
-    public void setSpeed(int s){
-        speed = s;
-    }
-
     public void setJumpHeight(int j){
         jumpHeight = j;
     }
@@ -50,13 +46,17 @@ public class Dog extends Thing implements Collideable{
     jumpSpeed = jS;
   }
 
-    public int getSpeed(){
-        return speed;
-    }
+  public Image getImage(){
+    return image;
+  }
 
-    public int getJumpHeight(){
-        return jumpHeight;
-    }
+  public void setImage(Image i){
+    image=i;
+  }
+
+  public int getJumpHeight(){
+    return jumpHeight;
+  }
 
   public int getJumpSpeed(){
     return jumpSpeed;
