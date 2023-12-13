@@ -168,6 +168,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       if(rand<=2){
         objects.add(new Coin(randX,yPos+10,15,15));
       }
+    else if(rand<=4){
+      objects.add(new Platform(randX,yPos,25,10));
+    }
     //obstacles need to be reworked
     //   else if(rand<=3){
     //     if(randX>=150)
@@ -239,7 +242,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       wallet= new Wallet(screenWidth-60,10);
 
       objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
-      for(int i=screenHeight-100; i>0; i-=50){
+      for(int i=screenHeight; i>-50; i-=50){
         spawnObjs(i);
       }
     }
