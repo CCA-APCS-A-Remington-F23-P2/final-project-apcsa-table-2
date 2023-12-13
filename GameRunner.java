@@ -208,11 +208,12 @@ public class GameRunner extends Canvas implements KeyListener, Runnable
       gameRunning=true;
 
       isJumping=false;
-      dog = new Dog(screenWidth/2,screenHeight/2);
+      dog = new Dog(screenWidth/2,screenHeight-100);
       objects = new GameObjects();
       wallet= new Wallet(screenWidth-60,10);
-      
-      for(int i=screenHeight-50; i>0; i-=50){
+
+      objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
+      for(int i=screenHeight-100; i>0; i-=50){
         spawnObjs(i);
       }
     }
