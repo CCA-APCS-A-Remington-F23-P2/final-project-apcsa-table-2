@@ -43,6 +43,18 @@ public class GameObjects
     }
   }
 
+  public void moveSmallPlatforms(){
+    for(Thing obj : objects){
+      if(obj.getWidth()==26){
+        if(Math.random()>0.99)
+          obj.setSpeed(-1*obj.getSpeed());
+        obj.move("LEFT");
+        if(obj.getX()<0||obj.getX()>270)
+          obj.setSpeed(-1*obj.getSpeed());
+      }
+    }
+  }
+
   public void shiftDown(int amount){
     for(Thing obj : objects){
       obj.setY(obj.getY()+amount);

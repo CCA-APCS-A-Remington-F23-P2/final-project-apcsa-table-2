@@ -179,6 +179,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       objects.draw(graphToBack);
       wallet.draw(graphToBack);
       objects.cleanUp(screenHeight);
+      objects.moveSmallPlatforms();
   }
 
   //randomly spawns objs
@@ -195,7 +196,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
         objects.add(new Coin(randX,yPos+10,15,15));
       }
     else if(rand<=4){
-      objects.add(new Platform(randX,yPos,25,10));
+      objects.add(new Platform(randX,yPos,26,10));
     }
     //obstacles need to be reworked
     //   else if(rand<=3){
