@@ -40,9 +40,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
+<<<<<<< HEAD
   private Inventory inventory;
   private File coinFile;
   private File inventoryFile;
+=======
+  private File file;
+  private int score = 0;
+>>>>>>> 7a48c030a1532b07d13366f91e0822a125e79fa1
 
   private boolean[] keys;
   private BufferedImage back;
@@ -123,6 +128,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   {
     graphToBack.setColor(Color.CYAN);
     graphToBack.fillRect(0,0,screenWidth,screenHeight);
+    graphToBack.setColor(Color.BLACK);
+    graphToBack.drawString("Score: " + score,screenWidth-80,40);
+    
   
     if (keys[0] && dog.getX()>0)
     {
@@ -146,6 +154,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
         gameRunning=false;
         wallet.addCoins();
+        score = 0;
       }
 
     //make the dog jump if it is touching a platform and not currently jumping
@@ -167,6 +176,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       dog.setY(dog.getY()+5);
       initialJumpPos+=5;
       screenShiftCount++;
+      score++;
       if(screenShiftCount==10){
         spawnObjs(0);
         screenShiftCount=0;
@@ -177,6 +187,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       objects.draw(graphToBack);
       wallet.draw(graphToBack);
       objects.cleanUp(screenHeight);
+      objects.moveSmallPlatforms();
   }
 
   //randomly spawns objs
@@ -193,7 +204,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
         objects.add(new Coin(randX,yPos+10,15,15));
       }
     else if(rand<=4){
-      objects.add(new Platform(randX,yPos,25,10));
+      objects.add(new Platform(randX,yPos,26,10));
     }
     //obstacles need to be reworked
     //   else if(rand<=3){

@@ -30,10 +30,10 @@ public class Platform extends Thing implements Collideable{
 
   public void move(String direction){
     if(direction.equals("UP"))
-      setY(getY()-getSpeed());
+      setY(getY()-Math.abs(getSpeed()));
 
     else if(direction.equals("DOWN"))
-      setY(getY()+getSpeed());
+      setY(getY()+Math.abs(getSpeed()));
 
     else if(direction.equals("RIGHT"))
       setX(getX()+getSpeed());
