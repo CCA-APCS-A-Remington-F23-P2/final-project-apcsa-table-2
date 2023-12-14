@@ -41,6 +41,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private GameObjects objects;
   private Wallet wallet;
   private File file;
+  private int score = 0;
 
   private boolean[] keys;
   private BufferedImage back;
@@ -119,6 +120,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   {
     graphToBack.setColor(Color.CYAN);
     graphToBack.fillRect(0,0,screenWidth,screenHeight);
+    graphToBack.setColor(Color.BLACK);
+    graphToBack.drawString("Score: " + score,screenWidth-80,40);
+    
   
     if (keys[0] && dog.getX()>0)
     {
@@ -142,6 +146,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
         gameRunning=false;
         wallet.addCoins();
+        score = 0;
       }
 
     //make the dog jump if it is touching a platform and not currently jumping
@@ -163,6 +168,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       dog.setY(dog.getY()+5);
       initialJumpPos+=5;
       screenShiftCount++;
+      score++;
       if(screenShiftCount==10){
         spawnObjs(0);
         screenShiftCount=0;
