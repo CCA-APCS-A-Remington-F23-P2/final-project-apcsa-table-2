@@ -43,7 +43,7 @@ public class Wallet{
     money+=coins;
     try{
       file.delete();
-      file = new File("gameData.txt");
+      file = new File("coinData.txt");
       writer = new FileWriter(file);
       writer.write(money+"");
       writer.flush();

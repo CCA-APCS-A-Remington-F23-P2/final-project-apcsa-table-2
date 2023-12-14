@@ -40,7 +40,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
-  private File file;
+  private Inventory inventory;
+  private File coinFile;
+  private File inventoryFile;
 
   private boolean[] keys;
   private BufferedImage back;
@@ -54,8 +56,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     inventoryOpen=false;
     dog = new Dog();
     
-    file = new File("gameData.txt");
-    wallet= new Wallet(screenWidth-60,10, file);
+    coinFile = new File("coinData.txt");
+    inventoryFile = new File("inventoryData.txt");
+    wallet= new Wallet(screenWidth-60,10, coinFile);
+    inventory = new Inventory(inventoryFile);
     
     setBackground(Color.black);
 
@@ -243,6 +247,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   public void keyTyped(KeyEvent e)
   {
+
   }
 
   public void mouseClicked(MouseEvent e){

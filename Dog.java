@@ -13,25 +13,31 @@ public class Dog extends Thing implements Collideable{
   private int jumpSpeed;
   private int jumpHeight;
   private int fallSpeed;
+  private String imgUrl;
   
   private Image image;
 
   public Dog(){
-  this(0,300,40,40,2,100,2,1);
+  this(0,300,40,40,2,100,2,1,"DogPics/GoldenRetriever.png");
   }
 
   public Dog(int x, int y){
-    this(x,y,40,40,2,100,2,1);
+    this(x,y,40,40,2,100,2,1,"DogPics/GoldenRetriever.png");
   }
 
-    public Dog(int x, int y, int w, int h, int spd, int jH, int jS, int fS){
+  public Dog(String imgUrl){
+    this(0,300,40,40,2,100,2,1,imgUrl);
+  }
+
+    public Dog(int x, int y, int w, int h, int spd, int jH, int jS, int fS, String imgUrl){
         super(x,y,w,h);
         speed = spd;
         jumpHeight = jH;
       jumpSpeed = jS;
       fallSpeed=fS;
+      this.imgUrl=imgUrl;
         try{
-            URL url = getClass().getResource("DogPics/GoldenRetriever.png");
+            URL url = getClass().getResource(imgUrl);
             image = ImageIO.read(url);
         }
         catch (Exception e){
@@ -60,6 +66,10 @@ public class Dog extends Thing implements Collideable{
 
   public int getJumpSpeed(){
     return jumpSpeed;
+  }
+
+  public String getImgUrl(){
+    return imgUrl;
   }
 
     public boolean didCollide(Thing o){
