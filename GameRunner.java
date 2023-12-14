@@ -40,14 +40,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
-<<<<<<< HEAD
   private Inventory inventory;
   private File coinFile;
   private File inventoryFile;
-=======
-  private File file;
+
   private int score = 0;
->>>>>>> 7a48c030a1532b07d13366f91e0822a125e79fa1
 
   private boolean[] keys;
   private BufferedImage back;
@@ -196,16 +193,16 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     int randX = (int)((Math.random()*5)+1)*50;
     
       //spawn platforms at a random xPos
+    if(rand<=7)
       objects.add(new Platform(randX,yPos,50,10));
+    else if(rand>7)
+      objects.add(new Platform(randX,yPos,25,10));
       
       //small chance of having either a coin or obstacle spawn in between platforms
     randX = (int)((Math.random()*11)+1)*25;
       if(rand<=2){
         objects.add(new Coin(randX,yPos+10,15,15));
       }
-    else if(rand<=4){
-      objects.add(new Platform(randX,yPos,26,10));
-    }
     //obstacles need to be reworked
     //   else if(rand<=3){
     //     if(randX>=150)

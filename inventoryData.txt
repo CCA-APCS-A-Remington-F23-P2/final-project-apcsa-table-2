@@ -1,1 +1,0 @@
-DogPics/GermanShepherd.png DogPics/Pomeranian.png DogPics/Borzoi.png DogPics/Poodle.png DogPics/AustralianShepherd.png DogPics/Dachshund.png DogPics/Husky.png DogPics/Pug.png DogPics/Corgi.png DogPics/ShibaInu.png DogPics/Dalmatian.png 
