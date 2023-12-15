@@ -12,22 +12,21 @@ public class Wallet{
   private int coins;
   Writer writer;
   Scanner scanner;
-  File file;
+  String fileName;
 
   //coins is coins collected in current game, money is total coins (persistent)
-  public Wallet(int x, int y, File f){
+  public Wallet(int x, int y, String f){
+    fileName = f;
     try{
-      file = f;
-      writer = new FileWriter(file);
-      scanner= new Scanner(file);
+      scanner= new Scanner(new File(fileName));
     }
-    catch(Exception e){System.out.println("error");}
+    catch(Exception e){}
     
     xPos = x;
     yPos = y;
     
     try{
-    money = scanner.nextInt();
+      money = scanner.nextInt();
     }
     catch(Exception e){}
     
@@ -42,9 +41,7 @@ public class Wallet{
   public void addCoins(){
     money+=coins;
     try{
-      file.delete();
-      file = new File("coinData.txt");
-      writer = new FileWriter(file);
+      writer = new FileWriter(new File(fileName));
       writer.write(money+"");
       writer.flush();
     }
