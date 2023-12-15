@@ -72,6 +72,10 @@ public class Dog extends Thing implements Collideable{
     return imgUrl;
   }
 
+  public void setImgUrl(String s){
+    imgUrl = s;
+  }
+
     public boolean didCollide(Thing o){
         if(this.getX()+this.getWidth() >= o.getX() && this.getX() <= o.getX()+o.getWidth() && this.getY()+this.getHeight() == o.getY()){
             return true;

@@ -36,7 +36,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private int[] nextY = {130, 145, 160};
   private int[] prevX = {90, 70, 90};
   private int[] prevY = {130, 145, 160};
-  
+  private boolean nextDog = false;
+  private boolean prevDog = false;
+  private int index;
+  private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
+
   private Dog dog;
   private GameObjects objects;
   private Wallet wallet;
@@ -109,6 +113,30 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.setColor(Color.BLACK);
       graphToBack.drawString("Welcome to Inu Janpu",screenWidth/4,20);
       graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
+      for(int i = 0; i < dogs.length; i++){
+        if(dogs[i].equals(dog.getImgUrl())){
+          index = i;
+          break;
+        }
+      }
+      if(nextDog == true){
+        if(dogs[index].equals(dogs[dogs.length-1])){
+           dog.setImgUrl(dogs[0]);
+        }
+        dog.setImgUrl(dogs[index + 1]);
+        graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
+        nextDog = false;
+      }
+      if(prevDog == true){
+        if(dogs[index].equals(dogs[0])){
+          dog.setImgUrl(dogs[dogs.length-1]);
+        }
+        else{
+          dog.setImgUrl(dogs[index - 1]);
+        }
+        graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
+        prevDog = false;
+      }
       graphToBack.fillRect(100,screenHeight-270,100,40);
       graphToBack.fillRect(100,screenHeight-200,100,40);
       graphToBack.fillPolygon(nextX, nextY, 3);
@@ -268,7 +296,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       objects = new GameObjects();
       objects.add(new Platform(screenWidth/3+25,dog.getY()+100,50,10));
 
-      dog = new Dog(screenWidth/2,screenHeight-100);
+      dog = new Dog(screenWidth/2,screenHeight-100, 40, 40, 2, 100, 2, 1, dog.getImgUrl());
       objects = new GameObjects();
 
       objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
@@ -278,11 +306,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
 
     if(e.getX() >= 210 && e.getX() <= 230 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
-      //next dog
+      nextDog = true;
     }
 
     if(e.getX() >= 70 && e.getX() <= 90 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
-      //prev dog
+      prevDog = true;
     }
     
     if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning){
