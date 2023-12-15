@@ -17,10 +17,10 @@ import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 import java.io.Writer;
 import java.io.FileWriter;
 import java.io.File;
-//import java.io.IOException;
 
 public class GameRunner extends Canvas implements KeyListener, Runnable, MouseListener
 {
@@ -41,8 +41,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private GameObjects objects;
   private Wallet wallet;
   private Inventory inventory;
-  private File coinFile;
-  private File inventoryFile;
 
   private int score = 0;
 
@@ -58,10 +56,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     inventoryOpen=false;
     dog = new Dog();
     
-    coinFile = new File("coinData.txt");
-    inventoryFile = new File("inventoryData.txt");
-    wallet= new Wallet(screenWidth-60,10, coinFile);
-    inventory = new Inventory(inventoryFile);
+    wallet= new Wallet(screenWidth-60,10, "coinData.txt");
+    inventory = new Inventory("inventoryData.txt");
     
     setBackground(Color.black);
 
@@ -95,12 +91,20 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.setColor(Color.WHITE);
       graphToBack.fillRect(0,0,screenWidth,screenHeight);
       graphToBack.setColor(Color.BLACK);
-      graphToBack.drawString("Welcome to the Inventory",screenWidth/4,20);
       graphToBack.fillRect(100,screenHeight-270,100,40);
       graphToBack.fillRect(100,screenHeight-200,100,40);
       graphToBack.setColor(Color.WHITE);
       graphToBack.drawString("START",130,screenHeight-245);
       graphToBack.drawString("MENU",130,screenHeight-175);
+
+      List<Dog> list = inventory.getList();
+      for(int i=0, x=0, y=0; i<list.size(); i++, x+=50){
+        graphToBack.drawImage(list.get(i).getImage(),x,y,50,75,null);
+        if(x+50>=300){
+          x=0;
+          y+=75;
+        }
+      }
     }
     //if it has not, display the main menu
     else{
@@ -138,21 +142,21 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       dog.move("RIGHT");
     }
     
-    //make dog constantly falling if it is not on a platform
+    //make dog constantly falling if it is not jumping
     if(!isJumping){
       dog.move("DOWN");
     }
 
-      if(objects.didCollide(dog, "coin")){
-        wallet.collectCoins(1);
-      }
+    if(objects.didCollide(dog, "coin")){
+      wallet.collectCoins(1);
+    }
 
     //game over
-      if(objects.didCollide(dog, "obstacle") || dog.getY()+dog.getHeight()>=screenHeight){
-        gameRunning=false;
-        wallet.addCoins();
-        score = 0;
-      }
+    if(dog.getY()+dog.getHeight()>=screenHeight){
+      gameRunning=false;
+      wallet.addCoins();
+      score = 0;
+    }
 
     //make the dog jump if it is touching a platform and not currently jumping
     if(objects.didCollide(dog, "platform") && !isJumping)
@@ -203,11 +207,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       if(rand<=2){
         objects.add(new Coin(randX,yPos+10,15,15));
       }
-    //obstacles need to be reworked
-    //   else if(rand<=3){
-    //     if(randX>=150)
-    //       objects.add(new Obstacle(randX,yPos+25,10,10));
-    // }
   
   }
 
@@ -255,7 +254,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   public void keyTyped(KeyEvent e)
   {
-
+    if(e.getKeyChar()==' ' && !gameRunning){
+      inventory.openCard();
+    }
   }
 
   public void mouseClicked(MouseEvent e){
