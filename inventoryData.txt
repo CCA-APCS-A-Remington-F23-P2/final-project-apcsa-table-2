@@ -1,1 +1,1 @@
-DogPics/GoldenRetreiver.png
+DogPics/GoldenRetreiver.png DogPics/Poodle.png DogPics/Dalmatian.png DogPics/Pomeranian.png DogPics/GermanShepherd.png DogPics/Husky.png DogPics/GoldenRetriever.png DogPics/Dachshund.png DogPics/AustralianShepherd.png DogPics/Borzoi.png DogPics/Corgi.png DogPics/Pug.png DogPics/ShibaInu.png DogPics/Iggy.png 

@@ -40,6 +40,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean prevDog = false;
   private int index;
   private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
+  private Image randomDogImg;
+  private int timer;
+  private boolean showRandomDog;
 
   private Dog dog;
   private GameObjects objects;
@@ -58,6 +61,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     screenHeight=h;
     gameRunning=false;
     inventoryOpen=false;
+    showRandomDog=false;
+    timer=0;
     dog = new Dog();
     
     wallet= new Wallet(screenWidth-60,10, "coinData.txt");
@@ -95,18 +100,27 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.setColor(Color.WHITE);
       graphToBack.fillRect(0,0,screenWidth,screenHeight);
       graphToBack.setColor(Color.BLACK);
-      graphToBack.fillRect(100,screenHeight-270,100,40);
+      graphToBack.fillRect(90,screenHeight-270,120,40);
       graphToBack.fillRect(100,screenHeight-200,100,40);
+      graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
       graphToBack.setColor(Color.WHITE);
-      graphToBack.drawString("START",130,screenHeight-245);
+      graphToBack.drawString("ADOPT DOG (50c)",95,screenHeight-245);
       graphToBack.drawString("MENU",130,screenHeight-175);
 
       List<Dog> list = inventory.getList();
-      for(int i=0, x=0, y=0; i<list.size(); i++, x+=50){
+      for(int i=0, x=-50, y=0; i<list.size(); i++, x+=50){
         graphToBack.drawImage(list.get(i).getImage(),x,y,50,75,null);
         if(x+50>=300){
-          x=0;
+          x=-50;
           y+=75;
+        }
+      }
+      if(showRandomDog){
+        graphToBack.drawImage(randomDogImg,25,25,250,400,null);
+        timer++;
+        if(timer>=50){
+          timer=0;
+          showRandomDog=false;
         }
       }
     }
@@ -116,6 +130,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.fillRect(0,0,screenWidth,screenHeight);
       graphToBack.setColor(Color.BLACK);
       graphToBack.drawString("Welcome to Inu Janpu",screenWidth/4,20);
+      graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
       graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
       for(int i = 0; i < dogs.length; i++){
         if(dogs[i].equals(dog.getImgUrl())){
@@ -282,14 +297,11 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   public void keyTyped(KeyEvent e)
   {
-    if(e.getKeyChar()==' ' && !gameRunning){
-      inventory.openCard();
-    }
   }
 
   public void mouseClicked(MouseEvent e){
     //restart game if START is pressed
-    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning){
+    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && !inventoryOpen){
       gameRunning=true;
       inventoryOpen=false;
 
@@ -306,6 +318,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       }
     }
 
+    //calls code to adopt a random dog
+    if(e.getX()>=90 && e.getX()<=210 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && inventoryOpen && wallet.getMoney()>=0){
+      showRandomDog=true;
+      randomDogImg=inventory.adoptRandomDog();
+      wallet.spendMoney(0);
+    }
+
     if(e.getX() >= 210 && e.getX() <= 230 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
       nextDog = true;
     }
@@ -313,7 +332,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     if(e.getX() >= 70 && e.getX() <= 90 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
       prevDog = true;
     }
-    
+
+    //toggles between inventory and main menu
     if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning){
       inventoryOpen=!inventoryOpen;
     }

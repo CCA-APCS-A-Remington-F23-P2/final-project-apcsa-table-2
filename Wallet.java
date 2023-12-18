@@ -53,6 +53,10 @@ public class Wallet{
     return money;
   }
 
+  public void spendMoney(int m){
+    money-=m;
+  }
+
   public void collectCoins(int c){
     coins+=c;
   }

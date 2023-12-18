@@ -4,12 +4,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.Writer;
 import java.util.Scanner;
+import java.awt.Image;
 
 public class Inventory
 {
   private List<Dog> dogList;
-  private String[] nameArr = {"DogPics/AustralianShepherd.png", "DogPics/Borzoi.png", "DogPics/Corgi.png", "DogPics/Dachshund.png", "DogPics/Dalmatian.png", "DogPics/GermanShepherd.png", "DogPics/Husky.png", "DogPics/Iggy.png", "DogPics/Pomeranian.png", "DogPics/Poodle.png", "DogPics/Pug.png", "DogPics/ShibaInu.png"};
-  private double[] weightArr = {0.7, 0.08, 0.4, 0.4, 0.5, 0.9, 0.4, 0.01, 0.3, 0.7, 0.08, 0.08};
+  private String[] nameArr = {"DogPics/GoldenRetriever.png","DogPics/AustralianShepherd.png", "DogPics/Borzoi.png", "DogPics/Corgi.png", "DogPics/Dachshund.png", "DogPics/Dalmatian.png", "DogPics/GermanShepherd.png", "DogPics/Husky.png", "DogPics/Iggy.png", "DogPics/Pomeranian.png", "DogPics/Poodle.png", "DogPics/Pug.png", "DogPics/ShibaInu.png"};
+  private double[] weightArr = {0.9,0.7, 0.08, 0.4, 0.4, 0.5, 0.9, 0.4, 0.01, 0.3, 0.7, 0.08, 0.08};
   private int cardPrice;
   
   private String fileName;
@@ -54,7 +55,7 @@ public class Inventory
   }
 
   //placeholder alg from stackoverflow, will code my own later
-  public void openCard(){
+  public Image adoptRandomDog(){
 
     //calculate total weight
     double totalWeight=0.0;
@@ -79,6 +80,7 @@ public class Inventory
       dogList.add(new Dog(nameArr[index]));
       saveInventory();
     }
+    return new Dog(nameArr[index]).getImage();
   }
   
 }
