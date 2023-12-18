@@ -225,8 +225,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       //spawn platforms at a random xPos
     if(rand<=7)
       objects.add(new Platform(randX,yPos,50,10));
-    else if(rand>7)
+    else if(rand<9.5)
       objects.add(new Platform(randX,yPos,25,10));
+    else
+      objects.add(new BreakablePlatform(randX,yPos,50,10));
       
       //small chance of having either a coin or obstacle spawn in between platforms
     randX = (int)((Math.random()*11)+1)*25;
