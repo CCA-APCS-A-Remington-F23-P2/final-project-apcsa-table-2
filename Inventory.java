@@ -10,7 +10,7 @@ public class Inventory
 {
   private List<Dog> dogList;
   private String[] nameArr = {"DogPics/GoldenRetriever.png","DogPics/AustralianShepherd.png", "DogPics/Borzoi.png", "DogPics/Corgi.png", "DogPics/Dachshund.png", "DogPics/Dalmatian.png", "DogPics/GermanShepherd.png", "DogPics/Husky.png", "DogPics/Iggy.png", "DogPics/Pomeranian.png", "DogPics/Poodle.png", "DogPics/Pug.png", "DogPics/ShibaInu.png"};
-  private double[] weightArr = {0.9,0.7, 0.08, 0.4, 0.4, 0.5, 0.9, 0.4, 0.01, 0.3, 0.7, 0.08, 0.08};
+  private double[] weightArr = {0.8,0.6, 0.08, 0.4, 0.4, 0.5, 0.8, 0.4, 0.01, 0.3, 0.7, 0.08, 0.08};
   private int cardPrice;
   
   private String fileName;
@@ -54,33 +54,31 @@ public class Inventory
     catch(Exception e){}
   }
 
-  //placeholder alg from stackoverflow, will code my own later
   public Image adoptRandomDog(){
 
-    //calculate total weight
-    double totalWeight=0.0;
-    for(double i : weightArr)
-      totalWeight+=i;
+    List<String> weightedDogList = new ArrayList<String>();
 
-    //choose random item
-    int index=0;
-    for(double r= Math.random()*totalWeight; index<nameArr.length-1; ++index){
-      r-=weightArr[index];
-      if(r<=0.0)
-        break;
+    //populate list
+    for(int i=0; i<weightArr.length;i++){
+      int weight=(int)(weightArr[i]*100);
+      for(int w=0; w<weight; w++){
+        weightedDogList.add(nameArr[i]);
+      }
     }
-
+    //choose random index
+    int index=(int)(Math.random()*weightedDogList.size());
+    
     //check if dog is duplicate, if it is not, add to list and write
     boolean isDup=false;
     for(Dog d: dogList){
-      if(d.getImgUrl().equals(nameArr[index]))
+      if(d.getImgUrl().equals(weightedDogList.get(index)))
         isDup=true;
     }
     if(!isDup){
-      dogList.add(new Dog(nameArr[index]));
+      dogList.add(new Dog(weightedDogList.get(index)));
       saveInventory();
     }
-    return new Dog(nameArr[index]).getImage();
+    return new Dog(weightedDogList.get(index)).getImage();
   }
   
 }
