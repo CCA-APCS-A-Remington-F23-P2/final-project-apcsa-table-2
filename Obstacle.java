@@ -37,4 +37,7 @@ public class Obstacle extends Thing implements Collideable{
       setX(getX()-getSpeed());
   }
 
+  public boolean broken(){
+    return false;
+  }
 }

@@ -48,5 +48,9 @@ public class Coin extends Thing implements Collideable{
     else if(direction.equals("LEFT"))
       setX(getX()-getSpeed());
   } 
+
+  public boolean broken(){
+    return false;
+  }
   
 }

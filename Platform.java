@@ -28,6 +28,10 @@ public class Platform extends Thing implements Collideable{
     return "platform";
   }
 
+  public boolean broken(){
+    return false;
+  }
+
   public void move(String direction){
     if(direction.equals("UP"))
       setY(getY()-Math.abs(getSpeed()));

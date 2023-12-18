@@ -108,6 +108,10 @@ public class Dog extends Thing implements Collideable{
       setX(getX()-speed);
   }
 
+  public boolean broken(){
+    return false;
+  }
+
   public String toString(){
     return "dog";
   }
