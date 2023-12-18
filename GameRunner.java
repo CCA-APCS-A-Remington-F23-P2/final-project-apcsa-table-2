@@ -128,7 +128,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
            dog.setImgUrl(dogs[0]);
         }
         dog.setImgUrl(dogs[index + 1]);
-        graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
         nextDog = false;
       }
       if(prevDog == true){
@@ -138,7 +137,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
         else{
           dog.setImgUrl(dogs[index - 1]);
         }
-        graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
         prevDog = false;
       }
       graphToBack.fillRect(100,screenHeight-270,100,40);

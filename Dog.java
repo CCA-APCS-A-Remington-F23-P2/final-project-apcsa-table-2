@@ -74,6 +74,12 @@ public class Dog extends Thing implements Collideable{
 
   public void setImgUrl(String s){
     imgUrl = s;
+    try{
+      URL url = getClass().getResource(imgUrl);
+      image = ImageIO.read(url);
+    }
+    catch (Exception e){
+    }
   }
 
     public boolean didCollide(Thing o){
