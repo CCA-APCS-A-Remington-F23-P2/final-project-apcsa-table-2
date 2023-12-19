@@ -208,13 +208,15 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       isJumping=true;
       initialJumpPos=dog.getY();
     }
-    if(initialJumpPos-dog.getY() >= dog.getJumpHeight()){
-      isJumping=false;
-    }
-    if(objects.didCollide(dog, "breakablePlatform") && !isJumping){
+    else if(objects.didCollide(dog, "breakablePlatform") && !isJumping){
       isJumping = true;
       initialJumpPos = dog.getY();
     }
+    
+    if(initialJumpPos-dog.getY() >= dog.getJumpHeight()){
+      isJumping=false;
+    }
+
     if(isJumping){
       dog.move("UP");
     }
