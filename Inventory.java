@@ -42,7 +42,7 @@ public class Inventory
     //make str representation of dogList
     String str="";
     for(Dog d : dogList){
-      str+=d.getImgUrl()+" ";
+      str+=" "+d.getImgUrl();
     }
 
     //overwrite current data w/ new data
@@ -54,8 +54,7 @@ public class Inventory
     catch(Exception e){}
   }
 
-  public Image adoptRandomDog(){
-
+  public Dog adoptRandomDog(){
     List<String> weightedDogList = new ArrayList<String>();
 
     //populate list
@@ -68,17 +67,20 @@ public class Inventory
     //choose random index
     int index=(int)(Math.random()*weightedDogList.size());
     
+    return new Dog(weightedDogList.get(index));
+  }
+
+  public void keepDog(Dog randDog){
     //check if dog is duplicate, if it is not, add to list and write
     boolean isDup=false;
     for(Dog d: dogList){
-      if(d.getImgUrl().equals(weightedDogList.get(index)))
+      if(d.getImgUrl().equals(randDog.getImgUrl()))
         isDup=true;
     }
     if(!isDup){
-      dogList.add(new Dog(weightedDogList.get(index)));
+      dogList.add(randDog);
       saveInventory();
     }
-    return new Dog(weightedDogList.get(index)).getImage();
   }
   
 }

@@ -40,8 +40,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean prevDog = false;
   private int index;
   private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
-  private Image randomDogImg;
-  private int timer;
+  private Dog randomDog;
   private boolean showRandomDog;
 
   private Dog dog;
@@ -62,7 +61,6 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     gameRunning=false;
     inventoryOpen=false;
     showRandomDog=false;
-    timer=0;
     dog = new Dog();
     
     wallet= new Wallet(screenWidth-60,10, "coinData.txt");
@@ -115,14 +113,17 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
           y+=75;
         }
       }
+      //if random dog is adpoted, show dog and whether to keep or not
       if(showRandomDog){
-        graphToBack.drawImage(randomDogImg,25,25,250,400,null);
-        timer++;
-        if(timer>=50){
-          timer=0;
-          showRandomDog=false;
-        }
+        graphToBack.drawImage(randomDog.getImage(),25,25,250,400,null);
+        graphToBack.setColor(Color.BLACK);
+        graphToBack.fillRect(screenWidth/2-100,screenHeight-175,75,35);
+        graphToBack.fillRect(screenWidth/2+25,screenHeight-175,75,35);
+        graphToBack.setColor(Color.WHITE);
+        graphToBack.drawString("keep <3",screenWidth/2-90,screenHeight-150);
+        graphToBack.drawString("return :\'(", screenWidth/2+35, screenHeight-150);
       }
+      
     }
     //if it has not, display the main menu
     else{
@@ -320,10 +321,22 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
 
     //calls code to adopt a random dog
-    if(e.getX()>=90 && e.getX()<=210 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && inventoryOpen && wallet.getMoney()>=0){
+    if(e.getX()>=90 && e.getX()<=210 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && inventoryOpen && wallet.getMoney()>=0 && !showRandomDog){
       showRandomDog=true;
-      randomDogImg=inventory.adoptRandomDog();
+      randomDog=inventory.adoptRandomDog();
       wallet.spendMoney(0);
+    }
+    
+    //keep dog button
+    if(e.getX()>=50 && e.getX()<=125 && e.getY()>=screenHeight-175 && e.getY()<=screenHeight-140 && showRandomDog){
+      inventory.keepDog(randomDog);
+      showRandomDog=false;
+    }
+    
+    //return dog button
+    if(e.getX()>=175 && e.getX()<=250 && e.getY()>=screenHeight-175 && e.getY()<=screenHeight-140 && showRandomDog){
+      showRandomDog=false;
+      wallet.spendMoney(-5);
     }
 
     if(e.getX() >= 210 && e.getX() <= 230 && e.getY() >= 130 && e.getY() <= 160 && !gameRunning){
@@ -335,7 +348,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
 
     //toggles between inventory and main menu
-    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning){
+    if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-200 && e.getY()<=screenHeight-160 && !gameRunning && !showRandomDog){
       inventoryOpen=!inventoryOpen;
     }
       
