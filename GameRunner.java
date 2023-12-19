@@ -39,7 +39,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean nextDog = false;
   private boolean prevDog = false;
   private int index;
-  private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
+  private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianShepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
   private Image randomDogImg;
   private int timer;
   private boolean showRandomDog;
@@ -142,7 +142,9 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
         if(dogs[index].equals(dogs[dogs.length-1])){
            dog.setImgUrl(dogs[0]);
         }
-        dog.setImgUrl(dogs[index + 1]);
+        else{
+          dog.setImgUrl(dogs[index + 1]);
+        }
         nextDog = false;
       }
       if(prevDog == true){
