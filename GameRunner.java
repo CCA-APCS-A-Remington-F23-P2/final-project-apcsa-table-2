@@ -211,7 +211,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     if(initialJumpPos-dog.getY() >= dog.getJumpHeight()){
       isJumping=false;
     }
-    objects.didCollide(dog, "breakablePlatform");
+    if(objects.didCollide(dog, "breakablePlatform") && !isJumping){
+      isJumping = true;
+      initialJumpPos = dog.getY();
+    }
     if(isJumping){
       dog.move("UP");
     }
@@ -238,13 +241,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   //randomly spawns objs
   public void spawnObjs(int yPos){
-      int rand = (int)(Math.random()*10);
+      double rand = (Math.random()*10);
     int randX = (int)((Math.random()*5)+1)*50;
     
       //spawn platforms at a random xPos
     if(rand<=7)
       objects.add(new Platform(randX,yPos,50,10));
-    else if(rand<9.5)
+    else if(rand<9.2)
       objects.add(new Platform(randX,yPos,25,10));
     else
       objects.add(new BreakablePlatform(randX,yPos,50,10));

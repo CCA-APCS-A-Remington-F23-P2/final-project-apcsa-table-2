@@ -78,4 +78,6 @@ public abstract class Thing{
   public abstract String toString();
 
   public abstract boolean broken();
+
+  public abstract void crack();
 }

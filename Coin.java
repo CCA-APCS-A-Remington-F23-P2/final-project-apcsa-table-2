@@ -52,5 +52,9 @@ public class Coin extends Thing implements Collideable{
   public boolean broken(){
     return false;
   }
+
+  public void crack(){
+
+  }
   
 }
