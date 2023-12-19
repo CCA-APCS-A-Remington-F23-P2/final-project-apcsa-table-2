@@ -40,14 +40,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean nextDog = false;
   private boolean prevDog = false;
   private int index;
-<<<<<<< HEAD
-  private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
-  private Dog randomDog;
-=======
+
   private ArrayList<String> dogs = new ArrayList<String>(Arrays.asList("DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianShepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"));
-  private Image randomDogImg;
+  private Dog randomDog;
   private int timer;
->>>>>>> 36197cc9b6277350bd35af65b23fe58bdf890380
   private boolean showRandomDog;
 
   private Dog dog;
@@ -316,7 +312,8 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   }
 
   public void mouseClicked(MouseEvent e){
-    //restart game if START is pressed
+    
+    //start game if START is pressed
     if(e.getX()>=100 && e.getX()<=200 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && !inventoryOpen){
       gameRunning=true;
       inventoryOpen=false;
@@ -329,7 +326,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       objects = new GameObjects();
 
       objects.add(new Platform(screenWidth/2,screenHeight-50,50,10));
-      for(int i=screenHeight; i>-50; i-=50){
+      for(int i=screenHeight-50; i>-50; i-=50){
         spawnObjs(i);
       }
     }
