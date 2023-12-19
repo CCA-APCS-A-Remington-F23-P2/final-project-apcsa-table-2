@@ -32,6 +32,10 @@ public class Platform extends Thing implements Collideable{
     return false;
   }
 
+  public void crack(){
+    
+  }
+
   public void move(String direction){
     if(direction.equals("UP"))
       setY(getY()-Math.abs(getSpeed()));

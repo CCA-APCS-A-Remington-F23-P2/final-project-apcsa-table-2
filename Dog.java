@@ -112,6 +112,10 @@ public class Dog extends Thing implements Collideable{
     return false;
   }
 
+  public void crack(){
+
+  }
+
   public String toString(){
     return "dog";
   }

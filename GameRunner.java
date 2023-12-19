@@ -17,6 +17,7 @@ import static java.lang.Character.*;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.io.Writer;
 import java.io.FileWriter;
@@ -39,8 +40,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean nextDog = false;
   private boolean prevDog = false;
   private int index;
+<<<<<<< HEAD
   private String[] dogs = {"DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianSHepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"};
   private Dog randomDog;
+=======
+  private ArrayList<String> dogs = new ArrayList<String>(Arrays.asList("DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianShepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"));
+  private Image randomDogImg;
+  private int timer;
+>>>>>>> 36197cc9b6277350bd35af65b23fe58bdf890380
   private boolean showRandomDog;
 
   private Dog dog;
@@ -133,25 +140,27 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       graphToBack.drawString("Welcome to Inu Janpu",screenWidth/4,20);
       graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
       graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
-      for(int i = 0; i < dogs.length; i++){
-        if(dogs[i].equals(dog.getImgUrl())){
+      for(int i = 0; i < dogs.size(); i++){
+        if(dogs.get(i).equals(dog.getImgUrl())){
           index = i;
           break;
         }
       }
-      if(nextDog == true){
-        if(dogs[index].equals(dogs[dogs.length-1])){
-           dog.setImgUrl(dogs[0]);
-        }
-        dog.setImgUrl(dogs[index + 1]);
-        nextDog = false;
-      }
-      if(prevDog == true){
-        if(dogs[index].equals(dogs[0])){
-          dog.setImgUrl(dogs[dogs.length-1]);
+      if(nextDog == true && dogs.size() > 1){
+        if(dogs.get(index).equals(dogs.get(dogs.size()-1))){
+           dog.setImgUrl(dogs.get(0));
         }
         else{
-          dog.setImgUrl(dogs[index - 1]);
+          dog.setImgUrl(dogs.get(index + 1));
+        }
+        nextDog = false;
+      }
+      if(prevDog == true && dogs.size() > 1){
+        if(dogs.get(index).equals(dogs.get(0))){
+          dog.setImgUrl(dogs.get(dogs.size()-1));
+        }
+        else{
+          dog.setImgUrl(dogs.get(index - 1));
         }
         prevDog = false;
       }
@@ -206,10 +215,15 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       isJumping=true;
       initialJumpPos=dog.getY();
     }
+    else if(objects.didCollide(dog, "breakablePlatform") && !isJumping){
+      isJumping = true;
+      initialJumpPos = dog.getY();
+    }
+    
     if(initialJumpPos-dog.getY() >= dog.getJumpHeight()){
       isJumping=false;
     }
-    objects.didCollide(dog, "breakablePlatform");
+
     if(isJumping){
       dog.move("UP");
     }
@@ -236,13 +250,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   //randomly spawns objs
   public void spawnObjs(int yPos){
-      int rand = (int)(Math.random()*10);
+      double rand = (Math.random()*10);
     int randX = (int)((Math.random()*5)+1)*50;
     
       //spawn platforms at a random xPos
     if(rand<=7)
       objects.add(new Platform(randX,yPos,50,10));
-    else if(rand<9.5)
+    else if(rand<9.2)
       objects.add(new Platform(randX,yPos,25,10));
     else
       objects.add(new BreakablePlatform(randX,yPos,50,10));
