@@ -6,7 +6,7 @@ import java.io.Writer;
 import java.util.Scanner;
 import java.awt.Image;
 
-public class Inventory
+public class Inventory implements Persistent
 {
   private List<Dog> dogList;
   private String[] nameArr = {"DogPics/GoldenRetriever.png","DogPics/AustralianShepherd.png", "DogPics/Borzoi.png", "DogPics/Corgi.png", "DogPics/Dachshund.png", "DogPics/Dalmatian.png", "DogPics/GermanShepherd.png", "DogPics/Husky.png", "DogPics/Iggy.png", "DogPics/Pomeranian.png", "DogPics/Poodle.png", "DogPics/Pug.png", "DogPics/ShibaInu.png"};
@@ -38,7 +38,7 @@ public class Inventory
     return dogList;
   }
 
-  public void saveInventory(){
+  public void save(){
     //make str representation of dogList
     String str="";
     for(Dog d : dogList){
@@ -79,7 +79,7 @@ public class Inventory
     }
     if(!isDup){
       dogList.add(randDog);
-      saveInventory();
+      save();
     }
   }
   

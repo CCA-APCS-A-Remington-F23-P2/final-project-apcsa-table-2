@@ -201,7 +201,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     //game over
     if(dog.getY()+dog.getHeight()>=screenHeight){
       gameRunning=false;
-      wallet.addCoins();
+      wallet.save();
       score = 0;
     }
 
