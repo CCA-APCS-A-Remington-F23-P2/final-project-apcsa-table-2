@@ -332,10 +332,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
 
     //calls code to adopt a random dog
-    if(e.getX()>=90 && e.getX()<=210 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && inventoryOpen && wallet.getMoney()>=0 && !showRandomDog){
+    if(e.getX()>=90 && e.getX()<=210 && e.getY()>=screenHeight-270 && e.getY()<=screenHeight-240 && !gameRunning && inventoryOpen && wallet.getMoney()>=50 && !showRandomDog){
       showRandomDog=true;
       randomDog=inventory.adoptRandomDog();
-      wallet.spendMoney(0);
+      wallet.spendMoney(50);
     }
     
     //keep dog button
