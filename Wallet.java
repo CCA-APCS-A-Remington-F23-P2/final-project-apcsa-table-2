@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 public class Wallet{
+  
   private int money;
   private int xPos;
   private int yPos;
