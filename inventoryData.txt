@@ -1,1 +1,1 @@
- placeholder DogPics/Pomeranian.png DogPics/GoldenRetriever.png DogPics/Corgi.png DogPics/Poodle.png DogPics/Husky.png DogPics/Dalmatian.png DogPics/GermanShepherd.png DogPics/AustralianShepherd.png DogPics/Dachshund.png DogPics/Pug.png
+ placeholder DogPics/GoldenRetriever.png DogPics/ShibaInu.png

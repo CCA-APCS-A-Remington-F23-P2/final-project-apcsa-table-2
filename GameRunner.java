@@ -41,7 +41,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
   private boolean prevDog = false;
   private int index;
 
-  private ArrayList<String> dogs = new ArrayList<String>(Arrays.asList("DogPics/GoldenRetriever.png", "DogPics/GermanShepherd.png", "DogPics/AustralianShepherd.png", "DogPics/Husky.png", "DogPics/Dalmatian.png", "DogPics/Dachshund.png", "DogPics/Corgi.png","DogPics/Poodle.png", "DogPics/Pomeranian.png", "DogPics/Pug.png", "DogPics/Borzoi.png", "DogPics/ShibaInu.png","DogPics/Iggy.png"));
+  private ArrayList<String> dogs;
   private Dog randomDog;
   private int timer;
   private boolean showRandomDog;
@@ -137,6 +137,13 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       catch(Exception e){}
       //graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
       graphToBack.drawImage(dog.getImage(),screenWidth/4,110,screenWidth/2,screenHeight/3,null);
+
+      //pulls dogs from inventory
+      ArrayList<String> dogs = new ArrayList<String>();
+      for(Dog d : inventory.getList()){
+        dogs.add(d.getImgUrl());
+      }
+      
       for(int i = 0; i < dogs.size(); i++){
         if(dogs.get(i).equals(dog.getImgUrl())){
           index = i;
