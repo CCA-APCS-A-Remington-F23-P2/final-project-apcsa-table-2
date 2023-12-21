@@ -1,1 +1,1 @@
- placeholder DogPics/GoldenRetriever.png DogPics/ShibaInu.png
+ placeholder DogPics/GoldenRetriever.png DogPics/Dalmatian.png DogPics/Husky.png
