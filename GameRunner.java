@@ -98,13 +98,14 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
     //if inventory has been opened, display inventory menu
     else if(inventoryOpen){
-      graphToBack.setColor(Color.WHITE);
-      graphToBack.fillRect(0,0,screenWidth,screenHeight);
-      graphToBack.setColor(Color.BLACK);
+      try{
+        graphToBack.drawImage(ImageIO.read(new File("InuJanpuInventory.png")),0,0, screenWidth, screenHeight, null);
+        }
+        catch(Exception e){}
       graphToBack.fillRect(90,screenHeight-270,120,40);
       graphToBack.fillRect(100,screenHeight-200,100,40);
-      graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
       graphToBack.setColor(Color.WHITE);
+      graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-50);
       graphToBack.drawString("ADOPT DOG (50c)",95,screenHeight-245);
       graphToBack.drawString("MENU",130,screenHeight-175);
 
@@ -130,12 +131,12 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
     }
     //if it has not, display the main menu
     else{
-      graphToBack.setColor(Color.WHITE);
-      graphToBack.fillRect(0,0,screenWidth,screenHeight);
-      graphToBack.setColor(Color.BLACK);
-      graphToBack.drawString("Welcome to Inu Janpu",screenWidth/4,20);
-      graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
-      graphToBack.drawImage(dog.getImage(),screenWidth/4,50,screenWidth/2,screenHeight/3,null);
+      try{
+      graphToBack.drawImage(ImageIO.read(new File("InuJanpuMainMenu.png")),0,0, screenWidth, screenHeight, null);
+      }
+      catch(Exception e){}
+      //graphToBack.drawString("Money: "+wallet.getMoney()+" coins",95, screenHeight-100);
+      graphToBack.drawImage(dog.getImage(),screenWidth/4,110,screenWidth/2,screenHeight/3,null);
       for(int i = 0; i < dogs.size(); i++){
         if(dogs.get(i).equals(dog.getImgUrl())){
           index = i;
@@ -174,8 +175,10 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
 
   public void game( Graphics graphToBack )
   {
-    graphToBack.setColor(Color.CYAN);
-    graphToBack.fillRect(0,0,screenWidth,screenHeight);
+    try{
+      graphToBack.drawImage(ImageIO.read(new File("InuJanpuBG.png")),0,0, screenWidth, screenHeight, null);
+      }
+      catch(Exception e){}
     graphToBack.setColor(Color.BLACK);
     graphToBack.drawString("Score: " + score,screenWidth-80,40);
     
