@@ -346,7 +346,7 @@ public class GameRunner extends Canvas implements KeyListener, Runnable, MouseLi
       showRandomDog=true;
       randomDog=inventory.adoptRandomDog();
       wallet.spendMoney(50);
-      wallet.save()
+      wallet.save();
     }
     
     //keep dog button
