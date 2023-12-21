@@ -5,7 +5,8 @@ import java.io.Writer;
 import java.io.FileWriter;
 import java.util.Scanner;
 
-public class Wallet{
+public class Wallet implements Persistent{
+  
   private int money;
   private int xPos;
   private int yPos;
@@ -38,7 +39,7 @@ public class Wallet{
     yPos = y;
   }
 
-  public void addCoins(){
+  public void save(){
     money+=coins;
     try{
       writer = new FileWriter(new File(fileName));
