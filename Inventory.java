@@ -56,7 +56,6 @@ public class Inventory implements Persistent
 
   public Dog adoptRandomDog(){
     List<String> weightedDogList = new ArrayList<String>();
-
     //populate list
     for(int i=0; i<weightArr.length;i++){
       int weight=(int)(weightArr[i]*100);
